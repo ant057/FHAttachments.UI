@@ -1,0 +1,15 @@
+<h1 class="mat-display-1">Jackaws love my big sphinx of quartz.</h1>
+<h2 class="mat-title">The quick brown fox jumps over the lazy dog.</h2>
+<form>
+  <mat-form-field style="width:100%">
+    <input matInput placeholder="Enter a Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" [formControl]="stateCtrl">
+    <mat-icon matSuffix>mode_edit</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+        <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+        <span>{{ state.name }}</span> |
+        <small>Population: {{state.population}}</small>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
