@@ -20,6 +20,7 @@ export class State {
 export class ClaimSearchComponent {
   stateCtrl: FormControl;
   filteredStates: Observable<any[]>;
+  tileColor: string = "lightblue";
 
   states: State[] = [
     {

@@ -1,1 +1,19 @@
-<app-claim-search></app-claim-search>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened>
+    <app-claim-search></app-claim-search>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="container">
+      <h2 style="text-align: center;" class="mat-title">Filehandler Attachments Drag & Drop</h2>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col-6">
+          <app-claim-drop></app-claim-drop>
+        </div>
+        <div class="col-6">
+          <app-claim-detail></app-claim-detail>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

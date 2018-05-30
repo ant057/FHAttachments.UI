@@ -1,0 +1,15 @@
+<form>
+  <mat-card>
+      <mat-form-field style="width:100%">
+        <input matInput placeholder="Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" [formControl]="stateCtrl">
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+            <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+            <span>{{ state.name }}</span> |
+            <small>Population: {{state.population}}</small>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+  </mat-card>
+</form>
