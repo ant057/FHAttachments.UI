@@ -1,10 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" opened>
     <app-claim-search></app-claim-search>
-  </mat-sidenav>
+  </mat-sidenav> 
   <mat-sidenav-content>
     <div class="container">
-      <h2 style="text-align: center;" class="mat-title">Filehandler Attachments Drag & Drop</h2>
+      <h2 style="text-align: center;" class="mat-display-3">Filehandler Attachments Drag & Drop</h2>
       <mat-divider></mat-divider>
       <div class="row">
         <div class="col-6">
@@ -14,6 +14,15 @@
           <app-claim-detail></app-claim-detail>
         </div>
       </div>
+    </div>
+    <div>
+      This section for pluralsight course
+      <ol>
+        <li *ngFor="let book of allBooks">
+          {{book.title}}
+        </li>
+      </ol>
+      <p>{{book?.title}}</p>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
