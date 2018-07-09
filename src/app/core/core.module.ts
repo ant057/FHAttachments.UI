@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from './data.service';
 
-import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatIconModule, 
+import { DataService } from './data.service';
+import { HttpCacheService } from './http-cache.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CacheInterceptor } from './cache.interceptor';
+
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatIconModule,
   MatGridListModule, MatCardModule, MatListModule, MatSidenavModule } from '@angular/material';
+
+import { AddHeaderInterceptor } from './add-header.interceptor';
+import { LogResponseInterceptor } from './log-response.interceptor';
 
 @NgModule({
   imports: [
@@ -28,6 +35,12 @@ import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatIconModul
     MatListModule,
     MatSidenavModule
   ],
-  providers: [DataService]
+  providers: [
+    DataService,
+  { provide: HTTP_INTERCEPTORS, useClass: AddHeaderInterceptor, multi: true},
+  { provide: HTTP_INTERCEPTORS, useClass: LogResponseInterceptor, multi: true},
+  { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true},
+  HttpCacheService
+]
 })
 export class CoreModule { }

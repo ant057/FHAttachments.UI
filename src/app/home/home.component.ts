@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/data.service';
 import { Book } from '../models/book';
+import { OldBook } from '../models/oldBook';
+import { BookTrackerError } from '../models/bookTrackerError';
+
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -19,17 +24,39 @@ export class HomeComponent implements OnInit {
     this.dataService.getAllBooks()
       .subscribe(
         (data: Book[]) => this.allBooks = data,
-        (err: any) => console.log(err),
+        (err: any) => console.error(err.friendlyMessage),
         () => console.log('This is done.')
       );
 
-    let bookID = this.bookID;
+    const bookID = this.bookID;
     this.dataService.getBookById(bookID)
       .subscribe(
         (data: Book) => this.book = data,
         (err: any) => console.log(err),
         () => console.log('This is done.')
     );
+
+    this.dataService.getOldBookById(bookID)
+    .subscribe(
+      (data: OldBook) => console.log(`Old book title: ${data.bookTitle}`)
+    );
+  }
+
+  addBook() {
+    this.dataService.addBook(new Book())
+      .subscribe(
+        (data: Book) => console.log(data),
+        err => console.log(err)
+      );
   }
 
 }
+
+/*
+const mouseMoves = fromEvent(document, 'mousemove');
+
+const subscription = mouseMoves.subscribe(
+  (evnt: MouseEvent) => { console.log(`Coords: ${evnt.clientX} X ${evnt.clientX} Y`); }
+);
+*/
+
