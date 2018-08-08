@@ -1,10 +1,21 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #sidenav mode="side" opened>
     <app-claim-search></app-claim-search>
   </mat-sidenav> 
   <mat-sidenav-content>
     <div class="container">
+      
+      <div class="row">
+        <div class="col-1">
+          <mat-icon style="cursor:pointer;" (click)="sidenav.toggle()">menu</mat-icon>
+        </div>
+        <div class="col-11">
+          <h2 style="text-align: center;">Filehandler Attachments Drag & Drop</h2>
+        </div>
+      </div>
+
       <h2 style="text-align: center;" class="mat-display-3">Filehandler Attachments Drag & Drop</h2>
+
       <mat-divider></mat-divider>
       <div class="row">
         <div class="col-6">

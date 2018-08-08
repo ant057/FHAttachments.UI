@@ -5,9 +5,10 @@
     <mat-card-subtitle>Culver Construction Co.</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <span class="mat-title"><mat-icon mat-list-icon>attachments</mat-icon> Attachments</span>
-    <mat-list>
-      <mat-list-item *ngFor="let attachment of attachments" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)>
+    <span class="mat-title">
+      <mat-icon mat-list-icon>attachments</mat-icon> Attachments</span>
+    <mat-list> 
+      <mat-list-item [@fade]="state" (@fade.done)="onDone($event)" style="cursor: pointer;" *ngFor="let attachment of attachments" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)>
         <mat-icon mat-list-icon>{{attachment.icon}}</mat-icon>
         <h4 mat-line>{{attachment.fileName}}</h4>
         <p mat-line>{{attachment.uploadedBy}}</p>
