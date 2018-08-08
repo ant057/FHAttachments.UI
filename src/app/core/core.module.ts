@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { DataService } from './data.service';
 import { HttpCacheService } from './http-cache.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CacheInterceptor } from './cache.interceptor';
 
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatIconModule,
-  MatGridListModule, MatCardModule, MatListModule, MatSidenavModule } from '@angular/material';
+  MatGridListModule, MatCardModule, MatListModule, MatSidenavModule, MatButtonModule } from '@angular/material';
 
 import { AddHeaderInterceptor } from './add-header.interceptor';
 import { LogResponseInterceptor } from './log-response.interceptor';
+import { CacheInterceptor } from './cache.interceptor';
 
 @NgModule({
   imports: [
@@ -22,7 +22,8 @@ import { LogResponseInterceptor } from './log-response.interceptor';
     MatGridListModule,
     MatCardModule,
     MatListModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonModule
   ],
   declarations: [],
   exports: [
@@ -33,7 +34,8 @@ import { LogResponseInterceptor } from './log-response.interceptor';
     MatGridListModule,
     MatCardModule,
     MatListModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonModule
   ],
   providers: [
     DataService,
