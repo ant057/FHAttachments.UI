@@ -4,18 +4,16 @@
       <input id="txtclaimSearch" matInput placeholder="Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" (keyup)="search($event)">
       <mat-icon matSuffix>search</mat-icon>
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let claim of claimSearches | async" (click)="selectClaim($event)" [value]="claim.fh_claim_num">
-          <span>{{claim.fh_claim_num}}
-            <small> - {{claim.open_close_status}}</small>
-          </span>
-          <small>{{claim.policy_num}}</small>
+        <mat-option *ngFor="let claim of $claimSearches | async" (click)="selectClaim(claim.fh_claim_num)" [value]="claim.fh_claim_num">
+          <span>{{claim.fh_claim_num}}</span>
+          <small>{{claim.policy_num}}</small> 
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </mat-card>
-  <mat-selection-list #shoes>
-    <mat-list-option *ngFor="let claim of claimHistory | async"> 
-      {{claim.fh_claim_num}}
+  <mat-selection-list style="width:100%">
+    <mat-list-option *ngFor="let claimH of claimHistory"> 
+      {{claimH}}
     </mat-list-option>
   </mat-selection-list>
 </form>

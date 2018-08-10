@@ -35,11 +35,11 @@ export class DataService {
     return ErrorObservable.create(dataError);
   }
 
-  getClaims(claimNumber: string): Observable<ClaimSearch[]> {
+  getClaims(claimNumber: string): Observable<ClaimSearch[] | FHAttachmentsError> {
     return this.http.get<ClaimSearch[]>(this.apiUrlBase + `claims/${claimNumber}`)
       .pipe(
-        // tap((claims: any) => console.log(claims.recordset as ClaimSearch[])),
-        map((claims: any) => claims.recordset as ClaimSearch[])
+        map((claims: any) => claims.recordset as ClaimSearch[]),
+        catchError(err => this.handleHttpError(err))
       );
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs/subject';
@@ -20,40 +20,50 @@ import { FHAttachmentsError } from '../models/FHAttachmentsError';
 })
 export class ClaimSearchComponent implements OnInit {
 
-  private searchTerms = new Subject<string>();
-  claimSearches: Observable<ClaimSearch[]>;
-  private show: boolean = false;
-  claimHistory: Observable<ClaimSearch[]>;
+  private claimSearchSubj = new Subject<string>();
+  $claimSearches: Observable<ClaimSearch[] | FHAttachmentsError>;
+  private claimHistSubj = new Subject<string>();
+  claimHistory: string[] = [];
 
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.processSearchTerm();
-  }
-
-  // Push a search term into the observable stream.
-  search(event: any): void {
-    if (event.target.value !== '') {
-      this.searchTerms.next(event.target.value);
-    }
-  }
-
-  selectClaim(event: any){
-    //
+    this.processHistoryTerm();
   }
 
   processSearchTerm() {
-    this.claimSearches = this.searchTerms
+    this.$claimSearches = this.claimSearchSubj
      .pipe(
        debounceTime(200),        // wait for 300ms pause in events
        distinctUntilChanged(),   // ignore if next search term is same as previous
-       tap(result => console.log('im here')),
        switchMap(term => term   // switch to new observable each time
            // return the http search observable
            ? this.dataService.getClaims(term)
            // or the observable of empty claims if no search term
            : Observable.of<ClaimSearch[]>([]))
      );
+  }
+
+  // Push a search term into the observable stream.
+  search(event: any): void {
+    if (event.target.value !== '') {
+      this.claimSearchSubj.next(event.target.value);
+    }
+  }
+
+  selectClaim(claimNumber: string) {
+    this.claimHistSubj.next(claimNumber);
+  }
+
+  processHistoryTerm() {
+    this.claimHistSubj
+     .pipe(
+      tap(v => console.log(v)),
+      map(v => this.claimHistory.push(v))
+     );
+
+    this.claimHistSubj.subscribe();
   }
 
 }
