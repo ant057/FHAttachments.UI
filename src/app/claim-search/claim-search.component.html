@@ -1,15 +1,21 @@
 <form>
   <mat-card>
-      <mat-form-field style="width:100%">
-        <input matInput placeholder="Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" [formControl]="stateCtrl">
-        <mat-icon matSuffix>search</mat-icon>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-            <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
-            <span>{{ state.name }}</span> |
-            <small>Population: {{state.population}}</small>
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+    <mat-form-field style="width:100%">
+      <input id="txtclaimSearch" matInput placeholder="Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" (keyup)="search($event)">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let claim of claimSearches | async" (click)="selectClaim($event)" [value]="claim.fh_claim_num">
+          <span>{{claim.fh_claim_num}}
+            <small> - {{claim.open_close_status}}</small>
+          </span>
+          <small>{{claim.policy_num}}</small>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </mat-card>
+  <mat-selection-list #shoes>
+    <mat-list-option *ngFor="let claim of claimHistory | async"> 
+      {{claim.fh_claim_num}}
+    </mat-list-option>
+  </mat-selection-list>
 </form>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/data.service';
 import { Book } from '../models/book';
 import { OldBook } from '../models/oldBook';
-import { BookTrackerError } from '../models/bookTrackerError';
+import { FHAttachmentsError } from '../models/fhAttachmentsError';
 
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,28 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getAllBooks()
+    
+  }
+
+
+}
+
+/*
+const mouseMoves = fromEvent(document, 'mousemove');
+
+const subscription = mouseMoves.subscribe(
+  (evnt: MouseEvent) => { console.log(`Coords: ${evnt.clientX} X ${evnt.clientX} Y`); }
+);
+
+addBook() {
+    this.dataService.addBook(new Book())
+      .subscribe(
+        (data: Book) => console.log(data),
+        err => console.log(err)
+      );
+  }
+
+  this.dataService.getAllBooks()
       .subscribe(
         (data: Book[]) => this.allBooks = data,
         (err: any) => console.error(err.friendlyMessage),
@@ -40,23 +61,6 @@ export class HomeComponent implements OnInit {
     .subscribe(
       (data: OldBook) => console.log(`Old book title: ${data.bookTitle}`)
     );
-  }
 
-  addBook() {
-    this.dataService.addBook(new Book())
-      .subscribe(
-        (data: Book) => console.log(data),
-        err => console.log(err)
-      );
-  }
-
-}
-
-/*
-const mouseMoves = fromEvent(document, 'mousemove');
-
-const subscription = mouseMoves.subscribe(
-  (evnt: MouseEvent) => { console.log(`Coords: ${evnt.clientX} X ${evnt.clientX} Y`); }
-);
 */
 

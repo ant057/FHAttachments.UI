@@ -5,8 +5,8 @@ import { bounce, jello } from 'ng-animate';
 @Component({
   selector: 'app-claim-detail',
   templateUrl: './claim-detail.component.html',
-  styleUrls: ['./claim-detail.component.css'],
-  animations: [
+  styleUrls: ['./claim-detail.component.css']
+ /* animations: [
     trigger('fade', [
       state('inactive', style({ opacity: 0.2 })),
       state('active', style({ opacity: 1 })),
@@ -14,7 +14,7 @@ import { bounce, jello } from 'ng-animate';
        animate(200)
       ])
     ])
-  ]
+  ]*/
 })
 export class ClaimDetailComponent implements OnInit {
 
@@ -78,9 +78,9 @@ export class ClaimDetailComponent implements OnInit {
 
   highlightMatLineItem(color: string){
     this.matLineItem.target.style.backgroundColor = color;
-    //e.nativeElement.style.backgroundColor = "red";
   }
 
+  /*
   onDone($event) {
     // call this function at the end of the previous animation.
     // run it as many time as defined
@@ -89,5 +89,5 @@ export class ClaimDetailComponent implements OnInit {
       this.counter++;
     }
   }
-
+  */
 }

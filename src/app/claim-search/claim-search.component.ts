@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
-import { Observable } from 'rxjs/Observable';
-import { startWith } from 'rxjs/operators/startWith';
-import { map } from 'rxjs/operators/map';
+import { Observable } from 'rxjs/observable';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import 'rxjs/add/observable/of';
+import { Subject } from 'rxjs/subject';
+import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-export class State {
-  constructor(public name: string, public population: string, public flag: string) { }
-}
+import { ClaimSearch } from '../models/claimSearch';
+import { DataService } from '../core/data.service';
+import { FHAttachmentsError } from '../models/FHAttachmentsError';
 
 /**
  * @title Autocomplete overview
@@ -17,50 +18,42 @@ export class State {
   templateUrl: './claim-search.component.html',
   styleUrls: ['./claim-search.component.css']
 })
-export class ClaimSearchComponent {
-  stateCtrl: FormControl;
-  filteredStates: Observable<any[]>;
-  tileColor: string = "lightblue";
+export class ClaimSearchComponent implements OnInit {
 
-  states: State[] = [
-    {
-      name: 'Arkansas',
-      population: '2.978M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
-    },
-    {
-      name: 'California',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Florida',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Texas',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    }
-  ];
+  private searchTerms = new Subject<string>();
+  claimSearches: Observable<ClaimSearch[]>;
+  private show: boolean = false;
+  claimHistory: Observable<ClaimSearch[]>;
 
-  constructor() {
-    this.stateCtrl = new FormControl();
-    this.filteredStates = this.stateCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(state => state ? this.filterStates(state) : this.states.slice())
-      );
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.processSearchTerm();
   }
 
-  filterStates(name: string) {
-    return this.states.filter(state =>
-      state.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+  // Push a search term into the observable stream.
+  search(event: any): void {
+    if (event.target.value !== '') {
+      this.searchTerms.next(event.target.value);
+    }
+  }
+
+  selectClaim(event: any){
+    //
+  }
+
+  processSearchTerm() {
+    this.claimSearches = this.searchTerms
+     .pipe(
+       debounceTime(200),        // wait for 300ms pause in events
+       distinctUntilChanged(),   // ignore if next search term is same as previous
+       tap(result => console.log('im here')),
+       switchMap(term => term   // switch to new observable each time
+           // return the http search observable
+           ? this.dataService.getClaims(term)
+           // or the observable of empty claims if no search term
+           : Observable.of<ClaimSearch[]>([]))
+     );
   }
 
 }

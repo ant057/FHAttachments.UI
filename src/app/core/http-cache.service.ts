@@ -23,4 +23,8 @@ export class HttpCacheService {
   invalidateCache(): void {
     this.requests = { };
   }
+
+  showCache() {
+    console.log(this.requests);
+  }
 }
