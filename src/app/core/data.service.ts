@@ -8,6 +8,7 @@ import { map, tap, catchError, switchMap } from 'rxjs/operators';
 import { Book } from '../models/book';
 import { OldBook } from '../models/oldBook';
 import { ClaimSearch } from '../models/claimSearch';
+import { ClaimDetail } from '../models/claimDetail';
 import { FHAttachmentsError } from '../models/FHAttachmentsError';
 
 @Injectable()
@@ -27,18 +28,18 @@ export class DataService {
       );
   }
 
-  handleHttpError(error: HttpErrorResponse): Observable<FHAttachmentsError> {
-    const dataError = new FHAttachmentsError();
-    dataError.errorNumber = error.status;
-    dataError.message = error.statusText;
-    dataError.friendlyMessage = 'An error occurred retrieving data.';
-    return ErrorObservable.create(dataError);
-  }
-
   getClaims(claimNumber: string): Observable<ClaimSearch[] | FHAttachmentsError> {
     return this.http.get<ClaimSearch[]>(this.apiUrlBase + `claims/${claimNumber}`)
       .pipe(
         map((claims: any) => claims.recordset as ClaimSearch[]),
+        catchError(err => this.handleHttpError(err))
+      );
+  }
+
+  getClaim(claimNumber: string): Observable<ClaimDetail | FHAttachmentsError> {
+    return this.http.get<ClaimDetail>(this.apiUrlBase + `claim/${claimNumber}`)
+      .pipe(
+        map((claim: any) => claim.recordset[0] as ClaimDetail),
         catchError(err => this.handleHttpError(err))
       );
   }
@@ -81,6 +82,14 @@ export class DataService {
 
   deleteBook(bookID: number): Observable<void> {
     return this.http.delete<void>(`/api/books/${bookID}`);
+  }
+
+  handleHttpError(error: HttpErrorResponse): Observable<FHAttachmentsError> {
+    const dataError = new FHAttachmentsError();
+    dataError.errorNumber = error.status;
+    dataError.message = error.statusText;
+    dataError.friendlyMessage = 'An error occurred retrieving data.';
+    return ErrorObservable.create(dataError);
   }
 
 }

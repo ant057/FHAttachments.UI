@@ -1,28 +1,25 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container style="height:900px;">
   <mat-sidenav #sidenav mode="side" opened>
-    <app-claim-search></app-claim-search>
-  </mat-sidenav> 
+    <app-claim-search (claimEventEmitter)="selectClaim($event)"></app-claim-search>
+  </mat-sidenav>
   <mat-sidenav-content>
+    <mat-toolbar [ngStyle]="{'background-color':'#7189FF'}" style="margin-bottom:20px">
+      <mat-icon style="cursor:pointer;" (click)="sidenav.toggle()">menu</mat-icon>
+      <span>&nbsp;&nbsp;&nbsp;Filehandler Attachment Manager</span>
+    </mat-toolbar>
     <div class="container">
-      
       <div class="row">
-        <div class="col-1">
-          <mat-icon style="cursor:pointer;" (click)="sidenav.toggle()">menu</mat-icon>
+        <div *ngIf="isLoading" class="col-12">
+          <mat-spinner></mat-spinner>
         </div>
-        <div class="col-11">
-          <h2 style="text-align: center;">Filehandler Attachments Drag & Drop</h2>
-        </div>
-      </div>
-
-      <h2 style="text-align: center;" class="mat-display-3">Filehandler Attachments Drag & Drop</h2>
-
-      <mat-divider></mat-divider>
-      <div class="row">
-        <div class="col-6">
-          <app-claim-drop></app-claim-drop>
+        <div class="col-12" style="margin-bottom:20px">
+          <app-claim-detail [claim]="claim"></app-claim-detail>
         </div>
         <div class="col-6">
-          <app-claim-detail></app-claim-detail>
+          <app-claim-attachment [claim]="claim"></app-claim-attachment>
+        </div>
+        <div class="col-6">
+          <app-claim-drop [claim]="claim"></app-claim-drop>
         </div>
       </div>
     </div>

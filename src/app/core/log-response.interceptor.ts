@@ -13,6 +13,7 @@ export class LogResponseInterceptor implements HttpInterceptor {
             .pipe(
                 tap(event => {
                     if (event.type === HttpEventType.Response) {
+                        console.warn('HTTP RESPONSE RECEIVED');
                         console.warn(event.body);
                     }
                 })

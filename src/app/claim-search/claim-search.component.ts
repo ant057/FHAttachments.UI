@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+// angular
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+// rxjs
 import { Observable } from 'rxjs/Observable';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs/subject';
 import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import 'rxjs/add/observable/of';
 
+// models
 import { ClaimSearch } from '../models/claimSearch';
-import { DataService } from '../core/data.service';
 import { FHAttachmentsError } from '../models/FHAttachmentsError';
+
+// services
+import { DataService } from '../core/data.service';
 
 /**
  * @title Autocomplete overview
@@ -24,12 +28,20 @@ export class ClaimSearchComponent implements OnInit {
   $claimSearches: Observable<ClaimSearch[] | FHAttachmentsError>;
   private claimHistSubj = new Subject<string>();
   claimHistory: string[] = [];
+  @Output() claimEventEmitter = new EventEmitter<string>();
 
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.processSearchTerm();
     this.processHistoryTerm();
+  }
+
+  // Push a search term into the observable stream.
+  searchClaim(event: any): void {
+    if (event.target.value !== '') {
+      this.claimSearchSubj.next(event.target.value);
+    }
   }
 
   processSearchTerm() {
@@ -45,25 +57,17 @@ export class ClaimSearchComponent implements OnInit {
      );
   }
 
-  // Push a search term into the observable stream.
-  search(event: any): void {
-    if (event.target.value !== '') {
-      this.claimSearchSubj.next(event.target.value);
-    }
-  }
-
   selectClaim(claimNumber: string) {
     this.claimHistSubj.next(claimNumber);
+
+    this.claimEventEmitter.emit(claimNumber);
   }
 
   processHistoryTerm() {
-    this.claimHistSubj
-     .pipe(
-      tap(v => console.log(v)),
-      map(v => this.claimHistory.push(v))
-     );
-
-    this.claimHistSubj.subscribe();
+    this.claimHistSubj.subscribe(
+      x => this.claimHistory.push(x),
+      err => console.log(err)
+    );
   }
 
 }

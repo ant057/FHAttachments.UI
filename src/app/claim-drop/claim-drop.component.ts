@@ -1,5 +1,12 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+// angular
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
+
+// 3rd party
 import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput } from 'ngx-uploader';
+
+// models
+import { ClaimDetail } from '../models/claimDetail';
+import { FHAttachmentsError } from '../models/fhAttachmentsError';
 
 @Component({
   selector: 'app-claim-drop',
@@ -8,6 +15,7 @@ import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput }
 })
 export class ClaimDropComponent {
 
+  @Input() claim: ClaimDetail | FHAttachmentsError;
   options: UploaderOptions;
   formData: FormData;
   files: UploadFile[];

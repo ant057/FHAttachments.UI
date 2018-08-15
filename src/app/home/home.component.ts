@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../core/data.service';
-import { Book } from '../models/book';
-import { OldBook } from '../models/oldBook';
-import { FHAttachmentsError } from '../models/fhAttachmentsError';
+// angular
+import { Component, OnInit, Input } from '@angular/core';
 
+// rxjs
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Observable } from 'rxjs/Observable';
+import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
+// models
+import { FHAttachmentsError } from '../models/fhAttachmentsError';
+
+// services
+import { DataService } from '../core/data.service';
+import { ClaimDetail } from '../models/claimDetail';
 
 @Component({
   selector: 'app-home',
@@ -14,16 +20,24 @@ import { Observable } from 'rxjs/Observable';
 })
 export class HomeComponent implements OnInit {
 
-  allBooks: Book[];
-  book: Book;
-  bookID: number = 3;
+  isLoading: boolean = false;
+  claim: ClaimDetail | FHAttachmentsError;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    
+
   }
 
+  selectClaim(claimNumber: string) {
+    this.isLoading = true;
+    this.dataService.getClaim(claimNumber)
+      .pipe(
+        map(v => this.claim = v)
+      ).subscribe();
+
+    this.isLoading = false;
+  }
 
 }
 

@@ -1,19 +1,27 @@
 <form>
   <mat-card>
     <mat-form-field style="width:100%">
-      <input id="txtclaimSearch" matInput placeholder="Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" (keyup)="search($event)">
+      <input id="txtclaimSearch" matInput placeholder="Claim Number" aria-label="ClaimNumber" [matAutocomplete]="auto" (keyup)="searchClaim($event)">
       <mat-icon matSuffix>search</mat-icon>
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let claim of $claimSearches | async" (click)="selectClaim(claim.fh_claim_num)" [value]="claim.fh_claim_num">
+        <mat-option *ngFor="let claim of $claimSearches | async" (click)="selectClaim(claim.fh_claim_num)">
           <span>{{claim.fh_claim_num}}</span>
-          <small>{{claim.policy_num}}</small> 
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </mat-card>
-  <mat-selection-list style="width:100%">
-    <mat-list-option *ngFor="let claimH of claimHistory"> 
-      {{claimH}}
-    </mat-list-option>
-  </mat-selection-list>
+  <mat-card [ngStyle]="{'padding':'0px'}">
+      <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
+          <span>&nbsp;&nbsp;&nbsp;Viewed Claims</span>
+        </mat-toolbar>
+    <mat-card-content [ngStyle]="{'padding':'24px'}">
+      <mat-list>
+        <mat-list-item *ngFor="let claimH of claimHistory.reverse()" (click)="selectClaim(claimH)" style="cursor:pointer;">
+          <mat-icon mat-list-icon>email</mat-icon>
+          {{claimH}}
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
 </form>

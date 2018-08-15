@@ -1,5 +1,9 @@
-<mat-card>
-  <mat-card-content>
+<mat-card *ngIf="claim" [ngStyle]="{'padding':'0px'}">
+  <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
+      <mat-icon>menu</mat-icon>
+      <span>&nbsp;&nbsp;&nbsp;Drag & Drop</span>
+    </mat-toolbar>
+  <mat-card-content [ngStyle]="{'padding':'24px'}">
     <div class="hero is-fullheight">
       <div class="hero-body">
         <div class="container">
@@ -7,12 +11,7 @@
             <div class="column is-8 is-offset-2">
               <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
                 <p>
-                  Drag a file here or
-                  <label class="upload-button">
-                    <input class="input-display-none" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
-                      multiple> browse
-                  </label>
-                  to upload.
+                  Drag a file here to upload.
                 </p>
               </div>
             </div>
@@ -37,6 +36,6 @@
   </mat-card-content>
 </mat-card>
 <div>
-<br/>
-<button mat-raised-button (click)="startUpload()">Upload</button> 
+  <br/>
+  <button *ngIf="claim" mat-raised-button (click)="startUpload()">Upload</button>
 </div>

@@ -1,20 +1,50 @@
-<mat-card>
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{claimNumber}}</mat-card-title>
-    <mat-card-subtitle>Culver Construction Co.</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <span class="mat-title">
-      <mat-icon mat-list-icon>attachments</mat-icon> Attachments</span>
-    <mat-list> 
-      <mat-list-item style="cursor: pointer;" *ngFor="let attachment of attachments" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)> 
-          <!--<mat-list-item [@fade]="state" (@fade.done)="onDone($event)" style="cursor: pointer;" *ngFor="let attachment of attachments" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)>-->
-        <mat-icon mat-list-icon>{{attachment.icon}}</mat-icon>
-        <h4 mat-line>{{attachment.fileName}}</h4>
-        <p mat-line>{{attachment.uploadedBy}}</p>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
+<mat-card *ngIf="claim" [ngStyle]="{'padding':'0px'}">
+    <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
+        <mat-icon>menu</mat-icon>
+        <span>&nbsp;&nbsp;&nbsp;Claim Detail</span>
+      </mat-toolbar>
+  <mat-card-content [ngStyle]="{'padding':'24px'}">
+    <div class="row">
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Claim Number" [value]="claim.fh_claim_num">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Policy Number" [value]="claim.policy_num">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="LOB" [value]="claim.lob_id">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Handler" [value]="claim.handler">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Insured" [value]="claim.insured">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Loss Date" [value]="claim.loss_date | date">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Claim Type" [value]="claim.claim_type">
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput readonly placeholder="Status" [value]="claim.open_close_status">
+        </mat-form-field>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>

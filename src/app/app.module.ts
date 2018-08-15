@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { ClaimSearchComponent } from './claim-search/claim-search.component';
 import { ClaimDetailComponent } from './claim-detail/claim-detail.component';
 import { ClaimDropComponent } from './claim-drop/claim-drop.component';
+import { ClaimAttachmentComponent } from './claim-attachment/claim-attachment.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ClaimDropComponent } from './claim-drop/claim-drop.component';
     HomeComponent,
     ClaimSearchComponent,
     ClaimDetailComponent,
-    ClaimDropComponent
+    ClaimDropComponent,
+    ClaimAttachmentComponent
   ],
   imports: [
     CoreModule,
