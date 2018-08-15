@@ -29,6 +29,7 @@ export class ClaimSearchComponent implements OnInit {
   private claimHistSubj = new Subject<string>();
   claimHistory: string[] = [];
   @Output() claimEventEmitter = new EventEmitter<string>();
+  matLineItem: any;
 
   constructor(private dataService: DataService) {}
 
@@ -68,6 +69,20 @@ export class ClaimSearchComponent implements OnInit {
       x => this.claimHistory.push(x),
       err => console.log(err)
     );
+  }
+
+  highlightEnter(e){
+    this.matLineItem = e;
+    this.highlightMatLineItem("#E8EAF6");
+  }
+
+  highlightLeave(e){
+    this.matLineItem = e;
+    this.highlightMatLineItem(null);
+  }
+
+  highlightMatLineItem(color: string){
+    this.matLineItem.target.style.backgroundColor = color;
   }
 
 }

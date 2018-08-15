@@ -1,6 +1,6 @@
 <mat-card *ngIf="claim" [ngStyle]="{'padding':'0px'}">
   <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
-      <mat-icon>menu</mat-icon>
+      <mat-icon>file_copy</mat-icon>
       <span>&nbsp;&nbsp;&nbsp;Drag & Drop</span>
     </mat-toolbar>
   <mat-card-content [ngStyle]="{'padding':'24px'}">
@@ -19,8 +19,8 @@
               <div class="upload-items">
                 <div class="upload-item" *ngFor="let f of files; let i = index;">
                   <span class="filename">
-                    <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
-                    <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
+                    <b><span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span></b><br/>
+                    <span>Upload Speed - {{ f.progress?.data?.speedHuman }}</span><br/>
                     <span>ETA {{ f.progress?.data?.etaHuman }}</span>
                   </span>
                   <div class="progress">

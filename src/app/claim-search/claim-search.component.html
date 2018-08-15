@@ -12,12 +12,12 @@
   </mat-card>
   <mat-card [ngStyle]="{'padding':'0px'}">
       <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
+          <mat-icon>folder_open</mat-icon>
           <span>&nbsp;&nbsp;&nbsp;Viewed Claims</span>
         </mat-toolbar>
     <mat-card-content [ngStyle]="{'padding':'24px'}">
       <mat-list>
-        <mat-list-item *ngFor="let claimH of claimHistory.reverse()" (click)="selectClaim(claimH)" style="cursor:pointer;">
-          <mat-icon mat-list-icon>email</mat-icon>
+        <mat-list-item *ngFor="let claimH of claimHistory.reverse()" (click)="selectClaim(claimH)" [ngStyle]="{'cursor':'pointer'}" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)>
           {{claimH}}
           <mat-divider></mat-divider>
         </mat-list-item>

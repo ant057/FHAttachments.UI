@@ -74,8 +74,7 @@ export class ClaimAttachmentComponent implements OnInit {
 
   highlightEnter(e){
     this.matLineItem = e;
-    this.highlightMatLineItem("red");
-    useAnimation(jello);
+    this.highlightMatLineItem("#E8EAF6");
   }
 
   highlightLeave(e){
