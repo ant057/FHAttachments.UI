@@ -12,6 +12,7 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 // services
 import { DataService } from '../core/data.service';
 import { ClaimDetail } from '../models/claimDetail';
+import { ClaimAttachment } from '../models/claimAttachment';
 
 @Component({
   selector: 'app-home',
@@ -22,11 +23,12 @@ export class HomeComponent implements OnInit {
 
   isLoading: boolean = false;
   claim: ClaimDetail | FHAttachmentsError;
+  claimAttachments: ClaimAttachment[] | FHAttachmentsError;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-
+    console.log('105020 Internal PR and Overland Park PD rpt .msg'.substring('105020 Internal PR and Overland Park PD rpt .msg'.indexOf('.') +1))
   }
 
   selectClaim(claimNumber: string) {
@@ -34,6 +36,11 @@ export class HomeComponent implements OnInit {
     this.dataService.getClaim(claimNumber)
       .pipe(
         map(v => this.claim = v)
+      ).subscribe();
+
+    this.dataService.getClaimAttachments(claimNumber)
+      .pipe(
+        map(v => this.claimAttachments = v)
       ).subscribe();
 
     this.isLoading = false;

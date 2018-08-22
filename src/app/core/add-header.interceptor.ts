@@ -9,8 +9,8 @@ export class AddHeaderInterceptor implements HttpInterceptor {
         console.log(`AddHeaderInterceptor -- ${req.url}`);
 
         const jsonReq: HttpRequest<any> = req.clone({
-            setHeaders: {'Content-Type': 'application/json'}
-        });
+            //setHeaders: {'Content-Type': 'application/json'}
+        }); 
 
         return next.handle(jsonReq);
     }

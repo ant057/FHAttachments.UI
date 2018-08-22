@@ -10,6 +10,7 @@ import { OldBook } from '../models/oldBook';
 import { ClaimSearch } from '../models/claimSearch';
 import { ClaimDetail } from '../models/claimDetail';
 import { FHAttachmentsError } from '../models/FHAttachmentsError';
+import { ClaimAttachment } from '../models/claimAttachment';
 
 @Injectable()
 export class DataService {
@@ -40,6 +41,22 @@ export class DataService {
     return this.http.get<ClaimDetail>(this.apiUrlBase + `claim/${claimNumber}`)
       .pipe(
         map((claim: any) => claim.recordset[0] as ClaimDetail),
+        catchError(err => this.handleHttpError(err))
+      );
+  }
+
+  getClaimAttachments(claimNumber: string): Observable<ClaimAttachment[] | FHAttachmentsError> {
+    return this.http.get<ClaimAttachment[]>(this.apiUrlBase + `claimattachments/${claimNumber}`)
+      .pipe(
+        map((claim: any) => claim.recordset as ClaimAttachment[]),
+        catchError(err => this.handleHttpError(err))
+      );
+  }
+
+  getClaimAttachment(claimNumber: string): Observable<ClaimAttachment[] | FHAttachmentsError> {
+    return this.http.get<ClaimAttachment[]>(this.apiUrlBase + `claimattachments/${claimNumber}`)
+      .pipe(
+        map((claim: any) => claim.recordset as ClaimAttachment[]),
         catchError(err => this.handleHttpError(err))
       );
   }
