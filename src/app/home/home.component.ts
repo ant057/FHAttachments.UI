@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    console.log('105020 Internal PR and Overland Park PD rpt .msg'.substring('105020 Internal PR and Overland Park PD rpt .msg'.indexOf('.') +1))
+    
   }
 
   selectClaim(claimNumber: string) {

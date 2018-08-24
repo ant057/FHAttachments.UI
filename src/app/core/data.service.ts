@@ -11,6 +11,7 @@ import { ClaimSearch } from '../models/claimSearch';
 import { ClaimDetail } from '../models/claimDetail';
 import { FHAttachmentsError } from '../models/FHAttachmentsError';
 import { ClaimAttachment } from '../models/claimAttachment';
+import { ClaimAttachmentBin } from '../models/claimAttachmentBin';
 
 @Injectable()
 export class DataService {
@@ -53,13 +54,17 @@ export class DataService {
       );
   }
 
-  getClaimAttachment(claimNumber: string): Observable<ClaimAttachment[] | FHAttachmentsError> {
-    return this.http.get<ClaimAttachment[]>(this.apiUrlBase + `claimattachments/${claimNumber}`)
-      .pipe(
-        map((claim: any) => claim.recordset as ClaimAttachment[]),
-        catchError(err => this.handleHttpError(err))
-      );
-  }
+  // getClaimAttachment(imageId: string): Observable<Blob | FHAttachmentsError> {
+  //   return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`, {responseType: 'blob'});
+  // }
+  
+   getClaimAttachment(imageId: string): Observable<Blob | FHAttachmentsError> {
+     return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`)
+       .pipe(
+         map((image: any) => image.recordset[0].image_bin.data as Blob),
+         catchError(err => this.handleHttpError(err))
+       );
+   }
 
   getBookById(id: number): Observable<Book> {
     return this.http.get<Book>(`/api/books/${id}`, {

@@ -10,6 +10,12 @@ import { ClaimDetail } from '../models/claimDetail';
 import { FHAttachmentsError } from '../models/fhAttachmentsError';
 import { ClaimAttachment } from '../models/claimAttachment';
 
+// rxjs
+import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
+import { DataService } from '../core/data.service';
+import { windowTime } from 'rxjs/operators';
+
 @Component({
   selector: 'app-claim-attachment',
   templateUrl: './claim-attachment.component.html',
@@ -21,7 +27,7 @@ export class ClaimAttachmentComponent implements OnInit {
   @Input() claimAttachments: ClaimAttachment[] | FHAttachmentsError;
   matLineItem: any;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -66,6 +72,15 @@ export class ClaimAttachmentComponent implements OnInit {
         return 'text';
       }
     }
+  }
+
+  async downloadAttachment() {
+    console.log('i got clicked');
+    const blob = await this.dataService.getClaimAttachment('007300000000028').subscribe(data => { window.URL.createObjectURL(data); });
+    console.log(blob);
+    //const url = window.URL.createObjectURL(blob);
+
+    //window.URL.revokeObjectURL(url);
   }
 
 }
