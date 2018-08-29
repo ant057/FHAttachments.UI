@@ -11,6 +11,7 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 import { ClaimAttachment } from '../models/claimAttachment';
 
 // rxjs
+import { Observable } from 'rxjs/Observable';
 import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { DataService } from '../core/data.service';
@@ -22,9 +23,8 @@ import { windowTime } from 'rxjs/operators';
   styleUrls: ['./claim-attachment.component.css']
 })
 export class ClaimAttachmentComponent implements OnInit {
-
-  @Input() claim: ClaimDetail | FHAttachmentsError;
-  @Input() claimAttachments: ClaimAttachment[] | FHAttachmentsError;
+  
+  @Input() claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
   matLineItem: any;
 
   constructor(private dataService: DataService) { }
@@ -74,9 +74,9 @@ export class ClaimAttachmentComponent implements OnInit {
     }
   }
 
-  async downloadAttachment() {
+  downloadAttachment() {
     console.log('i got clicked');
-    const blob = await this.dataService.getClaimAttachment('007300000000028').subscribe(data => { window.URL.createObjectURL(data); });
+    const blob = this.dataService.getClaimAttachment('007300000000028').subscribe(data => { window.URL.createObjectURL(data); });
     console.log(blob);
     //const url = window.URL.createObjectURL(blob);
 

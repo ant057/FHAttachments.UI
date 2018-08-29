@@ -22,26 +22,19 @@ import { ClaimAttachment } from '../models/claimAttachment';
 export class HomeComponent implements OnInit {
 
   isLoading: boolean = false;
-  claim: ClaimDetail | FHAttachmentsError;
-  claimAttachments: ClaimAttachment[] | FHAttachmentsError;
+  claim: Observable<ClaimDetail | FHAttachmentsError>;
+  claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    
+
   }
 
   selectClaim(claimNumber: string) {
     this.isLoading = true;
-    this.dataService.getClaim(claimNumber)
-      .pipe(
-        map(v => this.claim = v)
-      ).subscribe();
-
-    this.dataService.getClaimAttachments(claimNumber)
-      .pipe(
-        map(v => this.claimAttachments = v)
-      ).subscribe();
+    this.claim = this.dataService.getClaim(claimNumber);
+    this.claimAttachments = this.dataService.getClaimAttachments(claimNumber);
 
     this.isLoading = false;
   }

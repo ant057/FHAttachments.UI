@@ -60,7 +60,6 @@ export class ClaimSearchComponent implements OnInit {
 
   selectClaim(claimNumber: string) {
     this.claimHistSubj.next(claimNumber);
-
     this.claimEventEmitter.emit(claimNumber);
   }
 

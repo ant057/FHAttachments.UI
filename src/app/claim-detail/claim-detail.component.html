@@ -1,4 +1,4 @@
-<mat-card *ngIf="claim" [ngStyle]="{'padding':'0px'}">
+<mat-card *ngIf="(claim | async) as claim" [ngStyle]="{'padding':'0px'}">
     <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
         <mat-icon>info</mat-icon>
         <span>&nbsp;&nbsp;&nbsp;Claim Detail</span>
@@ -32,7 +32,7 @@
       </div>
       <div class="col-3">
         <mat-form-field>
-          <input matInput readonly placeholder="Loss Date" [value]="claim.loss_date | date">
+          <input matInput readonly placeholder="Loss Date" [value]="claim.loss_date">
         </mat-form-field>
       </div>
       <div class="col-3">

@@ -21,12 +21,12 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 })
 export class ClaimDetailComponent implements OnInit {
 
-  @Input() claim: ClaimDetail | FHAttachmentsError;
+  @Input() claim: Observable<ClaimDetail | FHAttachmentsError>;
 
   constructor() { }
 
   ngOnInit() {
-    
+    //this.claim.subscribe((data: ClaimDetail) => this.claimDetail.fh_claim_num = data.fh_claim_num);
   }
 
 }

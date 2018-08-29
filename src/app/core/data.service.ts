@@ -58,10 +58,10 @@ export class DataService {
   //   return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`, {responseType: 'blob'});
   // }
   
-   getClaimAttachment(imageId: string): Observable<Blob | FHAttachmentsError> {
+   getClaimAttachment(imageId: string): Observable<any | FHAttachmentsError> {
      return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`)
        .pipe(
-         map((image: any) => image.recordset[0].image_bin.data as Blob),
+         map((image: any) => image),
          catchError(err => this.handleHttpError(err))
        );
    }
