@@ -4,6 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 // rxjs
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/subject';
 import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 // models
@@ -22,21 +23,36 @@ import { ClaimAttachment } from '../models/claimAttachment';
 export class HomeComponent implements OnInit {
 
   isLoading: boolean = false;
-  claim: Observable<ClaimDetail | FHAttachmentsError>;
+  claim: ClaimDetail | FHAttachmentsError;
   claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
+  claimSubj = new Subject<string>();
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-
+    //this.getClaimDetail();
   }
 
   selectClaim(claimNumber: string) {
     this.isLoading = true;
-    this.claim = this.dataService.getClaim(claimNumber);
+    //this.dataService.getClaim(claimNumber).toPromise().then(c => this.claim = c);
+    //this.claimSubj.next(claimNumber);
     this.claimAttachments = this.dataService.getClaimAttachments(claimNumber);
+    //this.dataService.getClaim(claimNumber);
+    const newDS = this;
+    setTimeout(function() { newDS.dataService.getClaim(claimNumber).toPromise().then(c => newDS.claim = c); }, 3000);
 
     this.isLoading = false;
+  }
+
+  getClaimDetail() {
+    this.claimSubj.subscribe(
+      x => this.dataService.getClaim(x)
+            .pipe(
+              map(c => this.claim = c)
+            ),
+      err => console.log(err)
+    );
   }
 
 }

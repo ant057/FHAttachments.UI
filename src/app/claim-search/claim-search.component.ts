@@ -70,17 +70,17 @@ export class ClaimSearchComponent implements OnInit {
     );
   }
 
-  highlightEnter(e){
+  highlightEnter(e) {
     this.matLineItem = e;
     this.highlightMatLineItem("#E8EAF6");
   }
 
-  highlightLeave(e){
+  highlightLeave(e) {
     this.matLineItem = e;
     this.highlightMatLineItem(null);
   }
 
-  highlightMatLineItem(color: string){
+  highlightMatLineItem(color: string) {
     this.matLineItem.target.style.backgroundColor = color;
   }
 
