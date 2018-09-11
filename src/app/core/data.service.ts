@@ -58,12 +58,12 @@ export class DataService {
   //   return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`, {responseType: 'blob'});
   // }
   
-   getClaimAttachment(imageId: string): Observable<any | FHAttachmentsError> {
-     return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`)
-       .pipe(
-         map((image: any) => image),
-         catchError(err => this.handleHttpError(err))
-       );
+   getClaimAttachment(imageId: string): Observable<Blob | FHAttachmentsError> {
+     return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`,{ responseType: "blob"});
+      //  .pipe(
+      //    map((image: any) => image as Blob),
+      //    catchError(err => this.handleHttpError(err))
+      //  );
    }
 
   getBookById(id: number): Observable<Book> {

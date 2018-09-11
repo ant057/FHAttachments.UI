@@ -35,24 +35,13 @@ export class HomeComponent implements OnInit {
 
   selectClaim(claimNumber: string) {
     this.isLoading = true;
-    //this.dataService.getClaim(claimNumber).toPromise().then(c => this.claim = c);
-    //this.claimSubj.next(claimNumber);
     this.claimAttachments = this.dataService.getClaimAttachments(claimNumber);
-    //this.dataService.getClaim(claimNumber);
     const newDS = this;
-    setTimeout(function() { newDS.dataService.getClaim(claimNumber).toPromise().then(c => newDS.claim = c); }, 3000);
+    
+    // workaround. node needs a second to finish previous call..
+    setTimeout(function() { newDS.dataService.getClaim(claimNumber).toPromise().then(c => newDS.claim = c); }, 100);
 
     this.isLoading = false;
-  }
-
-  getClaimDetail() {
-    this.claimSubj.subscribe(
-      x => this.dataService.getClaim(x)
-            .pipe(
-              map(c => this.claim = c)
-            ),
-      err => console.log(err)
-    );
   }
 
 }
