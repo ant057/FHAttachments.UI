@@ -17,7 +17,7 @@ export class ClaimDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    //this.claim.subscribe((data: ClaimDetail) => this.claimDetail.fh_claim_num = data.fh_claim_num);
+    
   }
 
 }

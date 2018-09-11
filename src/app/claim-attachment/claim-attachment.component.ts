@@ -74,15 +74,4 @@ export class ClaimAttachmentComponent implements OnInit {
     }
   }
 
-  downloadAttachment() {
-    console.log('i got clicked');
-    //this.dataService.getClaimAttachment('007300000000028');
-    let blob:any = null;
-    this.dataService.getClaimAttachment('007300000000028').subscribe(data => { blob = window.URL.createObjectURL(data); });
-    window.open(blob);
-    //const url = window.URL.createObjectURL(blob);
-
-    //window.URL.revokeObjectURL(url);
-  }
-
 }
