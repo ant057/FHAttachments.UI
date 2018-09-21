@@ -54,22 +54,6 @@ export class DataService {
       );
   }
 
-  // getClaimAttachment(imageId: string): Observable<Blob | FHAttachmentsError> {
-  //   return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`, {responseType: 'blob'});
-  // }
-  
-   getClaimAttachment2(imageId: string): Observable<Blob | FHAttachmentsError> {
-     return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`, { responseType: 'blob'})
-        .pipe(
-          map((image: any) => image.recordset[0].image_bin as Blob),
-          catchError(err => this.handleHttpError(err))
-        );
-   }
-
-   getClaimAttachment(imageId: string): any {
-    return this.http.get(this.apiUrlBase + `claimattachment/${imageId}`);
-  }
-
   getBookById(id: number): Observable<Book> {
     return this.http.get<Book>(`/api/books/${id}`, {
       headers: new HttpHeaders({

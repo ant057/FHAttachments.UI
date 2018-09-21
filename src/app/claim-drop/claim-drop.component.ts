@@ -31,16 +31,17 @@ export class ClaimDropComponent {
 
   onUploadOutput(output: UploadOutput): void {
     if (output.type === 'allAddedToQueue') { // when all files added in queue
+      console.log(output);
       // uncomment this if you want to auto upload files when added
-      // const event: UploadInput = {
-      //   type: 'uploadAll',
-      //   url: '/upload',
-      //   method: 'POST',
-      //   data: { foo: 'bar' }
-      // };
-      // this.uploadInput.emit(event);
+         const event: UploadInput = {
+           type: 'uploadAll',
+           url: 'http://localhost:8080/api/addclaimattachment/299046',
+           method: 'POST'
+         };
+         this.uploadInput.emit(event);
     } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
       this.files.push(output.file);
+      console.log(output);
     } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
       // update current data in files array for uploading file
       const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
@@ -54,15 +55,19 @@ export class ClaimDropComponent {
       this.dragOver = false;
     } else if (output.type === 'drop') {
       this.dragOver = false;
+    } else if(output.type === 'done') {
+      console.log(output.file.response);
+    } else if(output.type === 'rejected') {
+      console.log('Rejected', output);
     }
   }
 
   startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://ngx-uploader.com/upload',
+      url: 'http://localhost:8080/api/addclaimattachment/299046',
       method: 'POST',
-      data: { foo: 'bar' }
+      file: this.files[0]
     };
 
     this.uploadInput.emit(event);
