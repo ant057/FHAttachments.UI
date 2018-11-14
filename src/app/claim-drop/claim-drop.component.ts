@@ -15,7 +15,7 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 })
 export class ClaimDropComponent {
 
-  @Input() claim: ClaimDetail | FHAttachmentsError;
+  @Input() claim: ClaimDetail;
   options: UploaderOptions;
   formData: FormData;
   files: UploadFile[];
@@ -35,7 +35,7 @@ export class ClaimDropComponent {
       // uncomment this if you want to auto upload files when added
          const event: UploadInput = {
            type: 'uploadAll',
-           url: 'http://localhost:8080/api/addclaimattachment/299046',
+           url: 'http://ausd-sur-web01:8089/api/addclaimattachment/' + this.claim.fh_claim_num,
            method: 'POST'
          };
          this.uploadInput.emit(event);
@@ -65,7 +65,7 @@ export class ClaimDropComponent {
   startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://localhost:8080/api/addclaimattachment/299046',
+      url: 'http://ausd-sur-web01:8089/api/addclaimattachment/' + this.claim.fh_claim_num,
       method: 'POST',
       file: this.files[0]
     };
