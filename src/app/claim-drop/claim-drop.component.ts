@@ -1,5 +1,5 @@
 // angular
-import { Component, OnInit, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 // 3rd party
 import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput } from 'ngx-uploader';
@@ -20,12 +20,17 @@ export class ClaimDropComponent {
   formData: FormData;
   files: UploadFile[];
   uploadInput: EventEmitter<UploadInput>;
+  @Output() selectClaim: EventEmitter<String>;
   humanizeBytes: Function;
   dragOver: boolean;
+
+  //apiurl: string = 'ausd-sur-web01:8089';
+  apiurl: string = 'localhost:8080';
 
   constructor() {
     this.files = []; // local uploading files array
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
+    this.selectClaim = new EventEmitter<String>();
     this.humanizeBytes = humanizeBytes;
   }
 
@@ -35,7 +40,7 @@ export class ClaimDropComponent {
       // uncomment this if you want to auto upload files when added
          const event: UploadInput = {
            type: 'uploadAll',
-           url: 'http://ausd-sur-web01:8089/api/addclaimattachment/' + this.claim.fh_claim_num,
+           url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
            method: 'POST'
          };
          this.uploadInput.emit(event);
@@ -48,6 +53,9 @@ export class ClaimDropComponent {
       this.files[index] = output.file;
     } else if (output.type === 'removed') {
       // remove file from array when removed
+      // need to add an "x" or a "clear" on the UI to remove a file.
+      // let the user manually do this?
+      // "clear" will emit the 'removed' event to the file drop component
       this.files = this.files.filter((file: UploadFile) => file !== output.file);
     } else if (output.type === 'dragOver') {
       this.dragOver = true;
@@ -56,7 +64,8 @@ export class ClaimDropComponent {
     } else if (output.type === 'drop') {
       this.dragOver = false;
     } else if(output.type === 'done') {
-      console.log(output.file.response);
+      console.log('all done');
+      this.selectClaim.emit(this.claim.fh_claim_num);
     } else if(output.type === 'rejected') {
       console.log('Rejected', output);
     }
@@ -65,7 +74,7 @@ export class ClaimDropComponent {
   startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://ausd-sur-web01:8089/api/addclaimattachment/' + this.claim.fh_claim_num,
+      url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
       method: 'POST',
       file: this.files[0]
     };

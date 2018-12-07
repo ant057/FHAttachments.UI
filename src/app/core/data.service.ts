@@ -15,7 +15,8 @@ import { ClaimAttachmentBin } from '../models/claimAttachmentBin';
 
 @Injectable()
 export class DataService {
-  private apiUrlBase: string = 'http://ausd-sur-web01:8089/api/';
+  //private apiUrlBase: string = 'http://ausd-sur-web01:8089/api/';
+  private apiUrlBase: string = 'http://localhost:8080/api/';
 
   constructor(private http: HttpClient) { }
 

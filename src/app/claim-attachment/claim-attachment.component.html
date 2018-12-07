@@ -10,7 +10,7 @@
         <!--<mat-list-item [@fade]="state" (@fade.done)="onDone($event)" style="cursor: pointer;" *ngFor="let attachment of attachments" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)>-->
         <!--<mat-icon mat-list-icon>{{attachment.icon}}</mat-icon> -->
           <img mat-list-icon src="/assets/{{selectAttachmentIcon(attachment.image_name)}}.png">
-          <a mat-line matTooltip="{{attachment.image_name}}" href="http://ausd-sur-web01:8089/api/claimattachment/{{attachment.image_id}}" download>{{attachment.image_name}}</a>
+          <a mat-line matTooltip="{{attachment.image_name}}" href="http://{{apiurl}}/api/claimattachment/{{attachment.image_id}}" download>{{attachment.image_name}}</a>
           <!-- <h4 mat-line matTooltip="{{attachment.image_name}}">{{attachment.image_name}}</h4> -->
           <small mat-line>{{attachment.image_desc}}</small>
         <mat-divider></mat-divider>

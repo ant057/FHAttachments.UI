@@ -19,7 +19,7 @@
           <app-claim-attachment [claimAttachments]="claimAttachments"></app-claim-attachment>
         </div>
         <div class="col-6">
-          <app-claim-drop [claim]="claim"></app-claim-drop>
+          <app-claim-drop [claim]="claim" (selectClaim)="selectClaim($event)"></app-claim-drop>
         </div>
       </div>
     </div>
