@@ -23,6 +23,9 @@ export class ClaimDropComponent {
   @Output() selectClaim: EventEmitter<String>;
   humanizeBytes: Function;
   dragOver: boolean;
+  filesTotal: number = 0;
+  filesUploaded: number = 0;
+  isClearDisabled: boolean = true;
 
   //apiurl: string = 'ausd-sur-web01:8089';
   apiurl: string = 'localhost:8080';
@@ -36,26 +39,20 @@ export class ClaimDropComponent {
 
   onUploadOutput(output: UploadOutput): void {
     if (output.type === 'allAddedToQueue') { // when all files added in queue
-      console.log(output);
       // uncomment this if you want to auto upload files when added
-         const event: UploadInput = {
-           type: 'uploadAll',
-           url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
-           method: 'POST'
-         };
-         this.uploadInput.emit(event);
-    } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
+      // const event: UploadInput = {
+      //   type: 'uploadAll',
+      //   url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
+      //   method: 'POST'
+      // };
+      // this.uploadInput.emit(event);
+    } else if (output.type === 'addedToQueue' && typeof output.file !== 'undefined') { // add file to array when added
       this.files.push(output.file);
-      console.log(output);
     } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
       // update current data in files array for uploading file
       const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
       this.files[index] = output.file;
     } else if (output.type === 'removed') {
-      // remove file from array when removed
-      // need to add an "x" or a "clear" on the UI to remove a file.
-      // let the user manually do this?
-      // "clear" will emit the 'removed' event to the file drop component
       this.files = this.files.filter((file: UploadFile) => file !== output.file);
     } else if (output.type === 'dragOver') {
       this.dragOver = true;
@@ -63,20 +60,27 @@ export class ClaimDropComponent {
       this.dragOver = false;
     } else if (output.type === 'drop') {
       this.dragOver = false;
-    } else if(output.type === 'done') {
-      console.log('all done');
-      this.selectClaim.emit(this.claim.fh_claim_num);
-    } else if(output.type === 'rejected') {
-      console.log('Rejected', output);
+    } else if (output.type === 'done') {
+      this.filesUploaded++;
+      //this.uploadInput.emit({ type: 'remove', id: output.file.id });
+    } else if (output.type === 'rejected') {
+      this.filesUploaded++;
     }
+
+    if (this.filesTotal === this.filesUploaded && this.filesTotal > 0) {
+      this.selectClaim.emit(this.claim.fh_claim_num);
+      this.filesUploaded = 0;
+      this.isClearDisabled = false;
+    }
+
   }
 
   startUpload(): void {
+    this.filesTotal = this.files.length;
     const event: UploadInput = {
       type: 'uploadAll',
       url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
-      method: 'POST',
-      file: this.files[0]
+      method: 'POST'
     };
 
     this.uploadInput.emit(event);
@@ -91,7 +95,9 @@ export class ClaimDropComponent {
   }
 
   removeAllFiles(): void {
-    this.uploadInput.emit({ type: 'removeAll' });
+    //this.uploadInput.emit({ type: 'removeAll' });
+    this.files.forEach(x => this.uploadInput.emit({ type: 'remove', id: x.id }) );
+    this.isClearDisabled = true;
   }
 
 }

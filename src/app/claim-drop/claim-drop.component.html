@@ -38,4 +38,5 @@
 <div>
   <br/>
   <button *ngIf="claim" mat-raised-button (click)="startUpload()">Upload</button>
+  <button *ngIf="claim" mat-raised-button (click)="removeAllFiles()" [disabled]="isClearDisabled">Clear</button>
 </div>
