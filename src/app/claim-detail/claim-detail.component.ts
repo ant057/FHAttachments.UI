@@ -17,7 +17,7 @@ export class ClaimDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
 }

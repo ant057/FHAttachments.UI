@@ -16,11 +16,11 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 export class ClaimDropComponent {
 
   @Input() claim: ClaimDetail;
+  @Output() selectClaim: EventEmitter<String>;
   options: UploaderOptions;
   formData: FormData;
   files: UploadFile[];
   uploadInput: EventEmitter<UploadInput>;
-  @Output() selectClaim: EventEmitter<String>;
   humanizeBytes: Function;
   dragOver: boolean;
   filesTotal: number = 0;
@@ -62,7 +62,6 @@ export class ClaimDropComponent {
       this.dragOver = false;
     } else if (output.type === 'done') {
       this.filesUploaded++;
-      //this.uploadInput.emit({ type: 'remove', id: output.file.id });
     } else if (output.type === 'rejected') {
       this.filesUploaded++;
     }
@@ -72,11 +71,11 @@ export class ClaimDropComponent {
       this.filesUploaded = 0;
       this.isClearDisabled = false;
     }
-
   }
 
   startUpload(): void {
-    this.filesTotal = this.files.length;
+    const completedFiles = this.files.filter(x => x.progress.data.percentage === 100);
+    this.filesTotal = this.files.length - completedFiles.length;
     const event: UploadInput = {
       type: 'uploadAll',
       url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
@@ -95,8 +94,7 @@ export class ClaimDropComponent {
   }
 
   removeAllFiles(): void {
-    //this.uploadInput.emit({ type: 'removeAll' });
-    this.files.forEach(x => this.uploadInput.emit({ type: 'remove', id: x.id }) );
+    this.files.forEach(x => this.uploadInput.emit({ type: 'remove', id: x.id }));
     this.isClearDisabled = true;
   }
 

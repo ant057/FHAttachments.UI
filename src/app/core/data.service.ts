@@ -12,6 +12,7 @@ import { ClaimDetail } from '../models/claimDetail';
 import { FHAttachmentsError } from '../models/FHAttachmentsError';
 import { ClaimAttachment } from '../models/claimAttachment';
 import { ClaimAttachmentBin } from '../models/claimAttachmentBin';
+import { ClaimParty } from '../models/claimParty';
 
 @Injectable()
 export class DataService {
@@ -43,6 +44,14 @@ export class DataService {
     return this.http.get<ClaimDetail>(this.apiUrlBase + `claim/${claimNumber}`)
       .pipe(
         map((claim: any) => claim.recordset[0] as ClaimDetail),
+        catchError(err => this.handleHttpError(err))
+      );
+  }
+
+  getClaimParties(claimNumber: string): Observable<ClaimParty[] | FHAttachmentsError> {
+    return this.http.get<ClaimParty[]>(this.apiUrlBase + `claimparties/${claimNumber}`)
+      .pipe(
+        map((claims: any) => claims.recordset as ClaimParty[]),
         catchError(err => this.handleHttpError(err))
       );
   }

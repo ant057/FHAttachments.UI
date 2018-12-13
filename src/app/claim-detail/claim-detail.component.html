@@ -47,4 +47,9 @@
       </div>
     </div>
   </mat-card-content>
+  <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
+    <mat-icon>people</mat-icon>
+    <span>&nbsp;&nbsp;&nbsp;Claimants</span>
+  </mat-toolbar>
+  <app-claim-party [claimNumber]="claim.fh_claim_num"></app-claim-party>
 </mat-card>
