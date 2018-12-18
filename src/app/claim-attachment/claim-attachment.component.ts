@@ -26,8 +26,8 @@ export class ClaimAttachmentComponent implements OnInit {
   
   @Input() claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
   matLineItem: any;
-  //apiurl: string = 'ausd-sur-web01:8089';
-  apiurl: string = 'localhost:8080';
+  apiurl: string = 'ausd-sur-web01:8089';
+  //apiurl: string = 'localhost:8080';
 
   constructor(private dataService: DataService) { }
 

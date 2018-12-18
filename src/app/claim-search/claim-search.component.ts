@@ -9,7 +9,7 @@ import 'rxjs/add/observable/of';
 
 // models
 import { ClaimSearch } from '../models/claimSearch';
-import { FHAttachmentsError } from '../models/FHAttachmentsError';
+import { FHAttachmentsError } from '../models/fhAttachmentsError';
 
 // services
 import { DataService } from '../core/data.service';

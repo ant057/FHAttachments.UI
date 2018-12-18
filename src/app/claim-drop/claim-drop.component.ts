@@ -6,7 +6,6 @@ import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput }
 
 // models
 import { ClaimDetail } from '../models/claimDetail';
-import { FHAttachmentsError } from '../models/fhAttachmentsError';
 
 @Component({
   selector: 'app-claim-drop',
@@ -27,8 +26,8 @@ export class ClaimDropComponent {
   filesUploaded: number = 0;
   isClearDisabled: boolean = true;
 
-  //apiurl: string = 'ausd-sur-web01:8089';
-  apiurl: string = 'localhost:8080';
+  apiurl: string = 'ausd-sur-web01:8089';
+  //apiurl: string = 'localhost:8080';
 
   constructor() {
     this.files = []; // local uploading files array
