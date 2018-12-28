@@ -1,5 +1,6 @@
 // angular
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 // 3rd party
 import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput } from 'ngx-uploader';
@@ -25,12 +26,14 @@ export class ClaimDropComponent {
   dragOver: boolean;
   filesTotal: number = 0;
   filesUploaded: number = 0;
+  filesDoneUploaded: number = 0;
+  filesRejectUploaded: number = 0;
   isClearDisabled: boolean = true;
 
   //apiurl: string = 'ausd-sur-web01:8089';
   apiurl: string = 'localhost:8080';
 
-  constructor() {
+  constructor(public snackBar: MatSnackBar) {
     this.files = []; // local uploading files array
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
     this.selectClaim = new EventEmitter<String>();
@@ -61,14 +64,21 @@ export class ClaimDropComponent {
     } else if (output.type === 'drop') {
       this.dragOver = false;
     } else if (output.type === 'done') {
-      this.filesUploaded++;
+      this.filesDoneUploaded++;
     } else if (output.type === 'rejected') {
-      this.filesUploaded++;
+      this.filesRejectUploaded++;
     }
 
-    if (this.filesTotal === this.filesUploaded && this.filesTotal > 0) {
+    if ((this.filesTotal === (this.filesDoneUploaded + this.filesRejectUploaded)) && this.filesTotal > 0) {
       this.selectClaim.emit(this.claim.fh_claim_num);
-      this.filesUploaded = 0;
+
+      const snackBarMsg = this.filesDoneUploaded + ' files successfully uploaded! ' + this.filesRejectUploaded + ' files rejected.';
+      this.snackBar.open(snackBarMsg, 'Dismiss', {
+        duration: 3000,
+      });
+
+      this.filesDoneUploaded = 0;
+      this.filesRejectUploaded = 0;
       this.isClearDisabled = false;
     }
   }

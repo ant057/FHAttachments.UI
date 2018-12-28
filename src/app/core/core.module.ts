@@ -7,7 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatIconModule,
   MatGridListModule, MatCardModule, MatListModule, MatSidenavModule, MatButtonModule,
-  MatToolbarModule, MatProgressSpinnerModule, MatTooltipModule, MatTabsModule } from '@angular/material';
+  MatToolbarModule, MatProgressSpinnerModule, MatTooltipModule, MatTabsModule, MatSnackBarModule } from '@angular/material';
 
 import { AddHeaderInterceptor } from './add-header.interceptor';
 import { LogResponseInterceptor } from './log-response.interceptor';
@@ -28,7 +28,8 @@ import { CacheInterceptor } from './cache.interceptor';
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule
   ],
   declarations: [],
   exports: [
@@ -44,7 +45,8 @@ import { CacheInterceptor } from './cache.interceptor';
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule
   ],
   providers: [
     DataService,

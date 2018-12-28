@@ -19,9 +19,9 @@
               <div class="upload-items">
                 <div class="upload-item" *ngFor="let f of files; let i = index;">
                   <span class="filename">
-                    <b><span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span></b><br/>
-                    <span>Upload Speed - {{ f.progress?.data?.speedHuman }}</span><br/>
-                    <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+                    <b><span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%<mat-icon *ngIf="f.progress?.data?.percentage === 100">check_box</mat-icon></span></b><br/>
+                    <small>Upload Speed - {{ f.progress?.data?.speedHuman }}</small><br/>
+                    <small>ETA {{ f.progress?.data?.etaHuman }}</small>
                   </span>
                   <div class="progress">
                     <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
