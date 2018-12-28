@@ -9,15 +9,15 @@ import { Book } from '../models/book';
 import { OldBook } from '../models/oldBook';
 import { ClaimSearch } from '../models/claimSearch';
 import { ClaimDetail } from '../models/claimDetail';
-import { FHAttachmentsError } from '../models/FHAttachmentsError';
+import { FHAttachmentsError } from '../models/fhAttachmentsError';
 import { ClaimAttachment } from '../models/claimAttachment';
 import { ClaimAttachmentBin } from '../models/claimAttachmentBin';
 import { ClaimParty } from '../models/claimParty';
 
 @Injectable()
 export class DataService {
-  //private apiUrlBase: string = 'http://ausd-sur-web01:8089/api/';
-  private apiUrlBase: string = 'http://localhost:8080/api/';
+  private apiUrlBase: string = 'http://ausd-sur-web01:8089/api/';
+  //private apiUrlBase: string = 'http://localhost:8080/api/';
 
   constructor(private http: HttpClient) { }
 
