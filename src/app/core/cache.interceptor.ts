@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { HttpCacheService } from './http-cache.service';
 
 @Injectable()
@@ -39,9 +38,9 @@ export class CacheInterceptor implements HttpInterceptor {
         return next.handle(req)
             .pipe(
                 tap(event => {
-                    if (event instanceof HttpResponse){
+                    if (event instanceof HttpResponse) {
                         console.log(`Adding item to cache: ${req.url}`);
-                        //this.cacheService.put(req.url, req.);
+                        // this.cacheService.put(req.url, req.);
                     }
                 })
             );

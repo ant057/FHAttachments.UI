@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  fhattachmentsapi: 'ausd-sur-web01:8089'
 };

@@ -1,15 +1,12 @@
 // angular
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-// 3rd party
-import { bounce, jello } from 'ng-animate';
-
 // models
 import { ClaimParty } from '../models/claimParty';
 import { FHAttachmentsError } from '../models/fhAttachmentsError';
 
 //rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { DataService } from '../core/data.service';
 

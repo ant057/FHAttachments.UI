@@ -1,11 +1,10 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
 // angular
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-
-// rxjs
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/subject';
 import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import 'rxjs/add/observable/of';
+
 
 // models
 import { ClaimSearch } from '../models/claimSearch';
@@ -54,7 +53,7 @@ export class ClaimSearchComponent implements OnInit {
            // return the http search observable
            ? this.dataService.getClaims(term)
            // or the observable of empty claims if no search term
-           : Observable.of<ClaimSearch[]>([]))
+           : observableOf<ClaimSearch[]>([]))
      );
   }
 

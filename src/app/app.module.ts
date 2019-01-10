@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgUploaderModule } from 'ngx-uploader';
+import { NgxUploaderModule } from 'ngx-uploader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -28,7 +28,7 @@ import { ClaimPartyComponent } from './claim-party/claim-party.component';
     CoreModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgUploaderModule,
+    NgxUploaderModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule

@@ -1,9 +1,13 @@
+// angular
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { trigger, transition, useAnimation, state, style, animate } from '@angular/animations';
-import { bounce, jello } from 'ng-animate';
+
+// models
 import { ClaimDetail } from '../models/claimDetail';
-import { Observable } from 'rxjs/Observable';
 import { FHAttachmentsError } from '../models/fhAttachmentsError';
+
+// rxjs
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-claim-detail',

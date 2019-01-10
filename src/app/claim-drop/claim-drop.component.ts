@@ -1,6 +1,7 @@
 // angular
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { environment } from '../../environments/environment';
 
 // 3rd party
 import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput } from 'ngx-uploader';
@@ -29,9 +30,6 @@ export class ClaimDropComponent {
   filesRejectUploaded: number = 0;
   isClearDisabled: boolean = true;
 
-  apiurl: string = 'ausd-sur-web01:8089';
-  //apiurl: string = 'localhost:8080';
-
   constructor(public snackBar: MatSnackBar) {
     this.files = []; // local uploading files array
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
@@ -44,7 +42,7 @@ export class ClaimDropComponent {
       // uncomment this if you want to auto upload files when added
       // const event: UploadInput = {
       //   type: 'uploadAll',
-      //   url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
+      //   url: 'http://' + environment.fhattachmentsapi + '/api/addclaimattachment/' + this.claim.fh_claim_num,
       //   method: 'POST'
       // };
       // this.uploadInput.emit(event);
@@ -87,7 +85,7 @@ export class ClaimDropComponent {
     this.filesTotal = this.files.length - completedFiles.length;
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://' + this.apiurl + '/api/addclaimattachment/' + this.claim.fh_claim_num,
+      url: 'http://' + environment.fhattachmentsapi + '/api/addclaimattachment/' + this.claim.fh_claim_num,
       method: 'POST'
     };
 

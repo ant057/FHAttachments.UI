@@ -1,6 +1,7 @@
 // angular
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { trigger, transition, useAnimation, state, style, animate } from '@angular/animations';
+import { environment } from '../../environments/environment';
 
 // 3rd party
 import { bounce, jello } from 'ng-animate';
@@ -11,11 +12,11 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 import { ClaimAttachment } from '../models/claimAttachment';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, tap, catchError, debounceTime, startWith, distinctUntilChanged, switchMap, windowTime } from 'rxjs/operators';
 
+// core
 import { DataService } from '../core/data.service';
-import { windowTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-claim-attachment',
@@ -23,11 +24,10 @@ import { windowTime } from 'rxjs/operators';
   styleUrls: ['./claim-attachment.component.css']
 })
 export class ClaimAttachmentComponent implements OnInit {
-  
+
   @Input() claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
   matLineItem: any;
-  apiurl: string = 'ausd-sur-web01:8089';
-  //apiurl: string = 'localhost:8080';
+  apiurl: string = environment.fhattachmentsapi;
 
   constructor(private dataService: DataService) { }
 

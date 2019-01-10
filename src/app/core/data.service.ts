@@ -1,12 +1,14 @@
+// angular
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
+// rxjs
 import { Observable } from 'rxjs/observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { map, tap, catchError, switchMap } from 'rxjs/operators';
 
 // Models
-import { Book } from '../models/book';
-import { OldBook } from '../models/oldBook';
 import { ClaimSearch } from '../models/claimSearch';
 import { ClaimDetail } from '../models/claimDetail';
 import { FHAttachmentsError } from '../models/fhAttachmentsError';
@@ -16,24 +18,13 @@ import { ClaimParty } from '../models/claimParty';
 
 @Injectable()
 export class DataService {
-  private apiUrlBase: string = 'http://ausd-sur-web01:8089/api/';
-  //private apiUrlBase: string = 'http://localhost:8080/api/';
+  private apiUrl: string = 'http://' + environment.fhattachmentsapi + '/api/';
 
   constructor(private http: HttpClient) { }
 
-  getAllBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>('/api/books');
-  }
-
-  getAllBooksError(): Observable<Book[] | FHAttachmentsError> {
-    return this.http.get<Book[]>('/api/errors/500')
-      .pipe(
-        catchError(err => this.handleHttpError(err))
-      );
-  }
-
   getClaims(claimNumber: string): Observable<ClaimSearch[] | FHAttachmentsError> {
-    return this.http.get<ClaimSearch[]>(this.apiUrlBase + `claims/${claimNumber}`)
+    console.log(this.apiUrl + `claims/${claimNumber}`);
+    return this.http.get<ClaimSearch[]>(this.apiUrl + `claims/${claimNumber}`)
       .pipe(
         map((claims: any) => claims.recordset as ClaimSearch[]),
         catchError(err => this.handleHttpError(err))
@@ -41,7 +32,7 @@ export class DataService {
   }
 
   getClaim(claimNumber: string): Observable<ClaimDetail | FHAttachmentsError> {
-    return this.http.get<ClaimDetail>(this.apiUrlBase + `claim/${claimNumber}`)
+    return this.http.get<ClaimDetail>(this.apiUrl + `claim/${claimNumber}`)
       .pipe(
         map((claim: any) => claim.recordset[0] as ClaimDetail),
         catchError(err => this.handleHttpError(err))
@@ -49,7 +40,7 @@ export class DataService {
   }
 
   getClaimParties(claimNumber: string): Observable<ClaimParty[] | FHAttachmentsError> {
-    return this.http.get<ClaimParty[]>(this.apiUrlBase + `claimparties/${claimNumber}`)
+    return this.http.get<ClaimParty[]>(this.apiUrl + `claimparties/${claimNumber}`)
       .pipe(
         map((claims: any) => claims.recordset as ClaimParty[]),
         catchError(err => this.handleHttpError(err))
@@ -57,51 +48,11 @@ export class DataService {
   }
 
   getClaimAttachments(claimNumber: string): Observable<ClaimAttachment[] | FHAttachmentsError> {
-    return this.http.get<ClaimAttachment[]>(this.apiUrlBase + `claimattachments/${claimNumber}`)
+    return this.http.get<ClaimAttachment[]>(this.apiUrl + `claimattachments/${claimNumber}`)
       .pipe(
         map((claim: any) => claim.recordset as ClaimAttachment[]),
         catchError(err => this.handleHttpError(err))
       );
-  }
-
-  getBookById(id: number): Observable<Book> {
-    return this.http.get<Book>(`/api/books/${id}`, {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Authorization': 'my-token'
-      })
-    });
-  }
-
-  getOldBookById(id: number): Observable<OldBook> {
-    return this.http.get<Book>(`/api/books/${id}`)
-      .pipe(
-        map(b => <OldBook> {
-            bookTitle: b.title,
-            year: b.publicationYear
-          }),
-        tap(classicBook => console.log(classicBook))
-      );
-  }
-
-  addBook( newbook: Book): Observable<Book> {
-    return this.http.post<Book>('/api/books', newbook, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
-  }
-
-  updateBook( updatedBook: Book): Observable<void> {
-    return this.http.put<void>(`/api/books/${updatedBook.bookID}`, updatedBook, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
-  }
-
-  deleteBook(bookID: number): Observable<void> {
-    return this.http.delete<void>(`/api/books/${bookID}`);
   }
 
   handleHttpError(error: HttpErrorResponse): Observable<FHAttachmentsError> {
