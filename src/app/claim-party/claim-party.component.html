@@ -1,5 +1,9 @@
 <mat-tab-group>
-  <mat-tab *ngFor="let party of claimParties | async" label="{{party.first_name}} {{party.last_name}}">
+  <mat-tab *ngFor="let party of claimParties | async">
+    <ng-template mat-tab-label>
+      <mat-icon>perm_identity</mat-icon>
+      {{party.first_name}} {{party.last_name}}
+    </ng-template>
     <div class="row" [ngStyle]="{'padding':'24px'}">
       <div class="col-4">
         <mat-form-field>

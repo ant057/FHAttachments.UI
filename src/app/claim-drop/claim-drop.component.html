@@ -1,4 +1,4 @@
-<mat-card *ngIf="claim" [ngStyle]="{'padding':'0px'}">
+<mat-card  [ngStyle]="{'padding':'0px'}">
   <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
       <mat-icon>file_copy</mat-icon>
       <span>&nbsp;&nbsp;&nbsp;Drag & Drop</span>
@@ -37,6 +37,6 @@
 </mat-card>
 <div>
   <br/>
-  <button *ngIf="claim" mat-raised-button (click)="startUpload()">Upload</button>
-  <button *ngIf="claim" mat-raised-button (click)="removeAllFiles()" [disabled]="isClearDisabled">Clear</button>
+  <button  mat-raised-button (click)="startUpload()">Upload</button>
+  <button  mat-raised-button (click)="removeAllFiles()" [disabled]="isClearDisabled">Clear</button>
 </div>

@@ -8,6 +8,7 @@ import { UploaderOptions, UploadFile, UploadInput, humanizeBytes, UploadOutput }
 
 // models
 import { ClaimDetail } from '../models/claimDetail';
+import { FHAttachmentsError } from '../models/fhAttachmentsError';
 
 @Component({
   selector: 'app-claim-drop',

@@ -5,17 +5,17 @@
   <mat-sidenav-content>
     <mat-toolbar [ngStyle]="{'background-color':'#7189FF','color':'white'}" style="margin-bottom:20px">
       <mat-icon style="cursor:pointer;" (click)="sidenav.toggle()">menu</mat-icon>
-      <span>&nbsp;&nbsp;&nbsp;Filehandler Attachment Manager</span>
+      <h2>&nbsp;&nbsp;&nbsp;Filehandler Attachment Manager</h2>
     </mat-toolbar>
     <div class="container">
-      <div class="row">
+      <div *ngIf="claim$ | async as claim" class="row"> 
         <div *ngIf="isLoading" class="col-12">
           <mat-spinner></mat-spinner>
         </div>
         <div class="col-12" style="margin-bottom:20px">
           <app-claim-detail [claim]="claim"></app-claim-detail>
         </div>
-        <div class="col-6">
+        <div *ngIf="claimAttachments$ | async as claimAttachments" class="col-6">
           <app-claim-attachment [claimAttachments]="claimAttachments"></app-claim-attachment>
         </div>
         <div class="col-6">

@@ -13,9 +13,6 @@ import { FHAttachmentsError } from '../models/fhAttachmentsError';
 // services
 import { DataService } from '../core/data.service';
 
-/**
- * @title Autocomplete overview
- */
 @Component({
   selector: 'app-claim-search',
   templateUrl: './claim-search.component.html',
@@ -67,20 +64,6 @@ export class ClaimSearchComponent implements OnInit {
       x => this.claimHistory.push(x),
       err => console.log(err)
     );
-  }
-
-  highlightEnter(e) {
-    this.matLineItem = e;
-    this.highlightMatLineItem("#E8EAF6");
-  }
-
-  highlightLeave(e) {
-    this.matLineItem = e;
-    this.highlightMatLineItem(null);
-  }
-
-  highlightMatLineItem(color: string) {
-    this.matLineItem.target.style.backgroundColor = color;
   }
 
 }

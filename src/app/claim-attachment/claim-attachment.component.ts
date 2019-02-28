@@ -25,28 +25,13 @@ import { DataService } from '../core/data.service';
 })
 export class ClaimAttachmentComponent implements OnInit {
 
-  @Input() claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
+  @Input() claimAttachments: ClaimAttachment[];
   matLineItem: any;
   apiurl: string = environment.fhattachmentsapi;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-  }
-
-  highlightEnter(e) {
-    this.matLineItem = e;
-    this.highlightMatLineItem('#E8EAF6', 'bold');
-  }
-
-  highlightLeave(e) {
-    this.matLineItem = e;
-    this.highlightMatLineItem(null, 'normal');
-  }
-
-  highlightMatLineItem(backgroundColor: string, fontWeight: string) {
-    this.matLineItem.target.style.backgroundColor = backgroundColor;
-    this.matLineItem.target.style.fontWeight = 700;
   }
 
   selectAttachmentIcon(filename: string) {

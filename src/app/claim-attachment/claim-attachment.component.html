@@ -1,12 +1,12 @@
-<mat-card *ngIf="claimAttachments" [ngStyle]="{'padding':'0px'}">
+<mat-card [ngStyle]="{'padding':'0px'}">
   <mat-toolbar [ngStyle]="{'background-color':'#C1CEFE'}">
     <mat-icon>attach_file</mat-icon>
     <span>&nbsp;&nbsp;&nbsp;Attachments</span>
   </mat-toolbar>
   <mat-card-content [ngStyle]="{'padding':'24px'}">
+    <div *ngIf="claimAttachments.length == 0">No Attachments Found for this Claim</div>
     <mat-list>
-      <mat-list-item style="cursor:pointer;" *ngFor="let attachment of claimAttachments | async" (mouseenter)=highlightEnter($event)
-        (mouseleave)=highlightLeave($event)>
+      <mat-list-item style="cursor:pointer;" *ngFor="let attachment of claimAttachments" claimHighlight>
         <img mat-list-icon src="/assets/{{selectAttachmentIcon(attachment.image_name)}}.png">
         <a mat-line matTooltip="{{attachment.image_name}}" href="http://{{apiurl}}/api/claimattachment/{{attachment.image_id}}"
           download>{{attachment.image_name}}</a>

@@ -17,7 +17,7 @@
         </mat-toolbar>
     <mat-card-content [ngStyle]="{'padding':'24px'}">
       <mat-list>
-        <mat-list-item *ngFor="let claimH of claimHistory.reverse()" (click)="selectClaim(claimH)" [ngStyle]="{'cursor':'pointer'}" (mouseenter)=highlightEnter($event) (mouseleave)=highlightLeave($event)>
+        <mat-list-item *ngFor="let claimH of claimHistory.reverse()" (click)="selectClaim(claimH)" [ngStyle]="{'cursor':'pointer'}" claimHighlight>
           {{claimH}}
           <mat-divider></mat-divider>
         </mat-list-item>

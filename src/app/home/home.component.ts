@@ -23,23 +23,23 @@ import { DataService } from '../core/data.service';
 export class HomeComponent implements OnInit {
 
   isLoading: boolean = false;
-  claim: ClaimDetail | FHAttachmentsError;
-  claimAttachments: Observable<ClaimAttachment[] | FHAttachmentsError>;
-  claimSubj = new Subject<string>();
+  claim$: Observable<ClaimDetail | FHAttachmentsError>;
+  claimAttachments$: Observable<ClaimAttachment[] | FHAttachmentsError>;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    // this.getClaimDetail();
+
   }
 
   selectClaim(claimNumber: string) {
     this.isLoading = true;
-    this.claimAttachments = this.dataService.getClaimAttachments(claimNumber);
-    const newDS = this;
+    this.claim$ = this.dataService.getClaim(claimNumber);
+    this.claimAttachments$ = this.dataService.getClaimAttachments(claimNumber);
 
+    // const newDS = this;
     // workaround. node needs a second to finish previous call..
-    setTimeout(function() { newDS.dataService.getClaim(claimNumber).toPromise().then(c => newDS.claim = c); }, 100);
+    // setTimeout(function() { this.claim$ = newDS.dataService.getClaim(claimNumber); }, 100);
 
     this.isLoading = false;
   }

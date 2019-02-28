@@ -13,6 +13,7 @@ import { ClaimDetailComponent } from './claim-detail/claim-detail.component';
 import { ClaimDropComponent } from './claim-drop/claim-drop.component';
 import { ClaimAttachmentComponent } from './claim-attachment/claim-attachment.component';
 import { ClaimPartyComponent } from './claim-party/claim-party.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ClaimPartyComponent } from './claim-party/claim-party.component';
     ClaimDetailComponent,
     ClaimDropComponent,
     ClaimAttachmentComponent,
-    ClaimPartyComponent
+    ClaimPartyComponent,
+    HighlightDirective
   ],
   imports: [
     CoreModule,

@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 })
 export class ClaimDetailComponent implements OnInit {
 
-  @Input() claim: Observable<ClaimDetail | FHAttachmentsError>;
+  @Input() claim: ClaimDetail | FHAttachmentsError;
 
   constructor() { }
 
